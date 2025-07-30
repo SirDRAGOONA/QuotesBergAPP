@@ -4,24 +4,24 @@
     "slug": "quotesbergapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/quotesberg_icon.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/quotesberg_icon.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#d4af37"
     },
     "platforms": ["ios", "android"],
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/quotesberg_icon.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#d4af37"
       },
       "package": "com.quotesberg.app"
     },
     "extra": {
       "eas": {
-        "projectId": "ae4518d8"
+        "projectId": "ae4518d8-0624-4e5a-861e-37f82e942442"
       }
     }
   }
