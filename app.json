@@ -4,27 +4,24 @@
     "slug": "quotesbergapp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/quotesberg_icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/quotesberg_icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1a1823"
+      "backgroundColor": "#d4af37"
     },
     "platforms": ["ios", "android"],
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#1a1823"
+        "foregroundImage": "./assets/quotesberg_icon.png",
+        "backgroundColor": "#d4af37"
       },
       "package": "com.quotesberg.app"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "extra": {
       "eas": {
-        "projectId": "ae4518d8-0624-4e5a-861e-37f82e942442"
+        "projectId": "ae4518d8"
       }
     }
   }
