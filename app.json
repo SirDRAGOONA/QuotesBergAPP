@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "QuotesBerg",
-    "slug": "quotesberg",
+    "slug": "quotesbergapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ae4518d8-0624-4e5a-861e-37f82e942442"
+        "projectId": "ae4518d8"
       }
     }
   }
