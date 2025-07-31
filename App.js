@@ -354,7 +354,7 @@ const animateLike = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={false} />
       
       <ImageBackground
         source={currentQuote.image}
@@ -501,14 +501,19 @@ const styles = StyleSheet.create({
   },
 menuButton: {
   position: 'absolute',
-  top: 60, // Increased for better touch area
+  top: 30, // Much lower to avoid StatusBar area
   left: 20,
   backgroundColor: 'rgba(42, 39, 50, 0.9)',
   borderRadius: 12,
-  padding: 16, // Increased padding for better touch
-  zIndex: 1000, // Higher z-index
-  elevation: 10, // For Android
+  padding: 20, // Larger touch area
+  zIndex: 10000, // Much higher z-index
+  elevation: 20, // Higher elevation for Android
+  width: 60, // Fixed dimensions
+  height: 60,
+  justifyContent: 'center',
+  alignItems: 'center',
 },
+
   menuButtonText: {
     color: '#d4af37',
     fontSize: 18,
