@@ -19,19 +19,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
 
-const [imageCache, setImageCache] = useState({});
 
-// Add this useEffect after your existing ones
-useEffect(() => {
-  // Preload all images
-  quotes.forEach(quote => {
-    if (!imageCache[quote.id]) {
-      Image.prefetch(quote.image.uri).then(() => {
-        setImageCache(prev => ({ ...prev, [quote.id]: true }));
-      });
-    }
-  });
-}, []);
+
+
 
 
 const quotes = [
@@ -115,6 +105,7 @@ export default function App() {
   
   // Sound
   const [sound, setSound] = useState();
+  const [imageCache, setImageCache] = useState({});
 
   useEffect(() => {
     loadStoredData();
@@ -130,6 +121,23 @@ export default function App() {
     updateStats();
     saveData();
   }, [favorites, currentIndex]);
+
+useEffect(() => {
+  updateStats();
+  saveData();
+}, [favorites, currentIndex]);
+
+useEffect(() => {
+  // Preload all images
+  quotes.forEach(quote => {
+    if (!imageCache[quote.id]) {
+      Image.prefetch(quote.image.uri).then(() => {
+        setImageCache(prev => ({ ...prev, [quote.id]: true }));
+      });
+    }
+  });
+}, [imageCache]); // Also add imageCache to dependency array
+
 
   const setupBackHandler = () => {
     const backAction = () => {
