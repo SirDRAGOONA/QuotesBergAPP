@@ -13,10 +13,26 @@ import {
   ScrollView,
   Share,
   BackHandler,
-  PanResponder
+  PanResponder,
+  Image // Add this import
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Audio } from 'expo-av';
+
+const [imageCache, setImageCache] = useState({});
+
+// Add this useEffect after your existing ones
+useEffect(() => {
+  // Preload all images
+  quotes.forEach(quote => {
+    if (!imageCache[quote.id]) {
+      Image.prefetch(quote.image.uri).then(() => {
+        setImageCache(prev => ({ ...prev, [quote.id]: true }));
+      });
+    }
+  });
+}, []);
+
 
 const quotes = [
   {
@@ -176,33 +192,33 @@ export default function App() {
   };
 
   const animateTransition = (callback) => {
-    Animated.sequence([
+  Animated.sequence([
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 150, // Faster fade out
+      useNativeDriver: true,
+    }),
+    Animated.timing(slideAnim, {
+      toValue: 30, // Smaller slide distance
+      duration: 0,
+      useNativeDriver: true,
+    })
+  ]).start(() => {
+    callback();
+    Animated.parallel([
       Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 200,
+        toValue: 1,
+        duration: 300, // Faster fade in
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
-        toValue: 50,
-        duration: 0,
+        toValue: 0,
+        duration: 300, // Faster slide back
         useNativeDriver: true,
       })
-    ]).start(() => {
-      callback();
-      Animated.parallel([
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 400,
-          useNativeDriver: true,
-        }),
-        Animated.timing(slideAnim, {
-          toValue: 0,
-          duration: 400,
-          useNativeDriver: true,
-        })
-      ]).start();
-    });
-  };
+    ]).start();
+  });
+};
 
   const generateQuote = () => {
     let newIndex;
@@ -231,39 +247,41 @@ export default function App() {
     }
   };
 
-  const toggleFavorite = () => {
-    const isFavorited = favorites.includes(currentIndex);
-    let newFavorites;
-    
-    if (isFavorited) {
-      newFavorites = favorites.filter(item => item !== currentIndex);
-      Alert.alert('Removed', 'Quote removed from favorites');
-    } else {
-      newFavorites = [...favorites, currentIndex];
-      playLikeSound();
-      animateLike();
-      Alert.alert('Added', 'Quote added to favorites! ❤️');
-    }
-    
-    setFavorites(newFavorites);
+const toggleFavorite = () => {
+  const isFavorited = favorites.includes(currentIndex);
+  let newFavorites;
+  
+  if (isFavorited) {
+    newFavorites = favorites.filter(item => item !== currentIndex);
+    // Simple visual feedback instead of dialog
     Vibration.vibrate(50);
-  };
+  } else {
+    newFavorites = [...favorites, currentIndex];
+    playLikeSound();
+    animateLike(); // This shows the heart animation
+    Vibration.vibrate([50, 100, 50]); // Double vibration pattern
+  }
+  
+  setFavorites(newFavorites);
+};
 
-  const animateLike = () => {
-    likeAnim.setValue(0);
-    Animated.sequence([
-      Animated.timing(likeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(likeAnim, {
-        toValue: 0,
-        duration: 800,
-        useNativeDriver: true,
-      })
-    ]).start();
-  };
+
+const animateLike = () => {
+  likeAnim.setValue(0);
+  Animated.sequence([
+    Animated.timing(likeAnim, {
+      toValue: 1,
+      duration: 300, // Slightly longer animation
+      useNativeDriver: true,
+    }),
+    Animated.timing(likeAnim, {
+      toValue: 0,
+      duration: 1200, // Longer fade out
+      useNativeDriver: true,
+    })
+  ]).start();
+};
+
 
   const shareQuote = async () => {
     try {
