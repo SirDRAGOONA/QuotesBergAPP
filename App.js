@@ -117,11 +117,6 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    updateStats();
-    saveData();
-  }, [favorites, currentIndex]);
-
 useEffect(() => {
   updateStats();
   saveData();
