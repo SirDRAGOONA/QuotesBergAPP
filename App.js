@@ -478,15 +478,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(26, 24, 35, 0.4)',
   },
-  menuButton: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-    backgroundColor: 'rgba(42, 39, 50, 0.9)',
-    borderRadius: 12,
-    padding: 12,
-    zIndex: 100,
-  },
+menuButton: {
+  position: 'absolute',
+  top: 60, // Increased for better touch area
+  left: 20,
+  backgroundColor: 'rgba(42, 39, 50, 0.9)',
+  borderRadius: 12,
+  padding: 16, // Increased padding for better touch
+  zIndex: 1000, // Higher z-index
+  elevation: 10, // For Android
+},
   menuButtonText: {
     color: '#d4af37',
     fontSize: 18,
